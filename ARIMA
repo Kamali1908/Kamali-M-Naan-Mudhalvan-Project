@@ -1,0 +1,18 @@
+# arima_forecast.py
+
+from statsmodels.tsa.arima.model import ARIMA
+import matplotlib.pyplot as plt
+
+# Assume df['date'] and df['AQI'] exist
+df['date'] = pd.to_datetime(df['date'])
+df.set_index('date', inplace=True)
+
+# Use just AQI for time series modeling
+model = ARIMA(df['AQI'], order=(5,1,0))
+model_fit = model.fit()
+
+forecast = model_fit.forecast(steps=30)
+forecast.plot(title='30-Day AQI Forecast')
+plt.xlabel("Days")
+plt.ylabel("Predicted AQI")
+plt.show()
